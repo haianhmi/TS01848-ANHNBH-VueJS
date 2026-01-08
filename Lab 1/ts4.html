@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>Energy Pilates - Blog</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <!-- Bootstrap JS -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background-color: #ffffff !important;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .navbar-brand img {
+            height: 50px;
+        }
+        .navbar-nav .nav-link {
+            color: #333 !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #00bcd4 !important;
+        }
+        .navbar-nav .nav-link i {
+            margin-right: 5px;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar-title {
+            color: #00bcd4;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .card.blog {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .card.blog .card-img-top {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: block;
+        }
+        .card.blog .card-body {
+            padding: 20px;
+            text-align: left;
+        }
+        .card.blog .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .card.blog .card-text {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        .list-group .list-group-item {
+            border: 1px solid #dee2e6;
+            padding: 12px 15px;
+            background-color: white;
+        }
+        .list-group .list-group-item.active.bg-info {
+            background-color: #00bcd4 !important;
+            color: white;
+            border-color: #00bcd4;
+        }
+        .list-group .list-group-item.active .nav-link {
+            color: white !important;
+        }
+        .list-group .list-group-item .nav-link {
+            text-decoration: none;
+            color: #333;
+            padding: 0;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-title {
+            color: #00bcd4;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .blog-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+        }
+
+        .featured-post {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            height: 100%;
+        }
+        .featured-post img {
+            width: 100%;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .featured-post h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .featured-post .comment-count {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        .featured-post p {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 10px;
+        }
+
+        .side-posts {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            height: 100%;
+        }
+        .post-item {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .post-item:last-child {
+            margin-bottom: 0;
+        }
+        .post-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+        .post-item .post-info {
+            flex: 1;
+        }
+        .post-item .post-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .post-item .comment-count {
+            color: #6c757d;
+            font-size: 0.85rem;
+        }
+
+        .btn-load-more {
+            background-color: #00bcd4;
+            color: white;
+            border: none;
+            padding: 8px 30px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+        .btn-load-more:hover {
+            background-color: #00a3b8;
+            color: white;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 25px 0;
+            margin-top: 50px;
+        }
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="images/logo-energy-pilates.png" alt="Energy Pilates" style="height:50px;">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-file-text"></i> Bài viết
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-camera-video"></i> Video
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-info-circle"></i> Giới thiệu
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-calendar-event"></i> Sự kiện
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person"></i> Tài khoản
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Đăng nhập</a></li>
+                        <li><a class="dropdown-item" href="#">Quên mật khẩu</a></li>
+                        <li><a class="dropdown-item" href="#">Đăng ký thành viên</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Tiếng Việt</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Tiếng Anh</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="container">
+    <div class="row">
+
+        <!-- ===== SIDEBAR (ASIDE) ===== -->
+        <aside class="col-md-4">
+            <!-- Về tôi -->
+            <h2 class="sidebar-title">Về tôi</h2>
+            <div class="card blog">
+                <img src="images/avatar.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Giới thiệu bản thân</h5>
+                    <p class="card-text">TS. Trần Hoàng, Tổ chức Tư vấn sức khỏe quốc tế độc lập<br>
+                    Châm ngôn: Ta không được chọn nơi mình sinh ra, nhưng ta được chọn cách mình sẽ sống</p>
+                </div>
+            </div>
+
+            <!-- Chuyên mục -->
+            <h2 class="sidebar-title">Chuyên mục</h2>
+            <ul class="list-group">
+                <li class="list-group-item active bg-info d-flex justify-content-between align-items-center">
+                    <a class="nav-link" href="#">Chế độ tập</a>
+                    <span class="badge bg-primary rounded-pill">12</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a class="nav-link" href="#">Chế độ dinh dưỡng</a>
+                    <span class="badge bg-primary rounded-pill">15</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a class="nav-link" href="#">Cẩm nang cuộc sống</a>
+                    <span class="badge bg-primary rounded-pill">99</span>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- ===== MAIN BLOG CONTENT ===== -->
+        <main class="col-md-8">
+            <h2 class="main-title">Blog của tôi</h2>
+
+            <div class="blog-section">
+                <div class="row g-3">
+                    <!-- Bài viết chính -->
+                    <div class="col-md-7">
+                        <div class="featured-post">
+                            <h5>
+                                Phương pháp tập Pilates giúp phục hồi chấn thương cột sống
+                                <span class="comment-count">
+                                    <i class="bi bi-chat-left-text-fill"></i> 16
+                                </span>
+                            </h5>
+                            <img src="images/tap-piltes.jpg" alt="Tập Pilates">
+                            <p>
+                                Ngoài việc giúp duy trì vóc dáng, Pilates còn cải thiện sự linh hoạt, 
+                                hỗ trợ phục hồi chấn thương hiệu quả.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Các bài viết phụ -->
+                    <div class="col-md-5">
+                        <div class="side-posts">
+                            <div class="post-item">
+                                <img src="images/corevalue.jpg" alt="Core Value">
+                                <div class="post-info">
+                                    <div class="post-title">Biết ơn đời, đời sẽ thương ta</div>
+                                    <div class="comment-count">
+                                        <i class="bi bi-chat-left-text-fill"></i> 30
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="post-item">
+                                <img src="images/orange_300x300.jpg" alt="Orange">
+                                <div class="post-info">
+                                    <div class="post-title">9 tác dụng tuyệt vời của quả cam</div>
+                                    <div class="comment-count">
+                                        <i class="bi bi-chat-left-text-fill"></i> 28
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="post-item">
+                                <img src="images/sesameoil_300x300.jpg" alt="Sesame Oil">
+                                <div class="post-info">
+                                    <div class="post-title">10 công dụng bất ngờ từ dầu dừa</div>
+                                    <div class="comment-count">
+                                        <i class="bi bi-chat-left-text-fill"></i> 15
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="post-item">
+                                <img src="images/spinach_300x300.jpg" alt="Spinach">
+                                <div class="post-info">
+                                    <div class="post-title">Lợi ích khi ăn rau mỗi ngày</div>
+                                    <div class="comment-count">
+                                        <i class="bi bi-chat-left-text-fill"></i>  12
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nút Xem thêm -->
+                <div class="text-center">
+                    <button class="btn btn-load-more">Xem thêm</button>
+                </div>
+            </div>
+        </main>
+
+    </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <p>© Copyright by FPT Polytechnic</p>
+</footer>
+
+</body>
+</html>
