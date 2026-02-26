@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Navbar />
-    
+
     <div v-if="book">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -25,23 +25,18 @@
           </div>
 
           <div class="text-center my-3">
-            <img :src="book.image" class="img-fluid rounded" 
-                 style="max-height: 400px;" :alt="book.title">
+            <img :src="book.image" class="img-fluid rounded" style="max-height: 400px;" :alt="book.title">
           </div>
-          
+
           <div class="my-3">
             <h5>Giới Thiệu</h5>
             <p>{{ book.description }}</p>
           </div>
-          
+
           <hr>
-          
+
           <h5>Bình Luận ({{ book.comments.length }})</h5>
-          
-          <div v-if="book.comments.length === 0" class="alert alert-info">
-            Chưa có bình luận nào. Hãy là người đầu tiên bình luận!
-          </div>
-          
+
           <div v-for="comment in book.comments" :key="comment.id" class="card mb-2">
             <div class="card-body">
               <div class="d-flex justify-content-between">
@@ -54,22 +49,21 @@
               <small class="text-muted">{{ comment.timestamp }}</small>
             </div>
           </div>
-          
+
+          <!---->
           <div v-if="isAuthenticated" class="mt-3">
             <h6>Thêm Bình Luận</h6>
             <div class="input-group">
-              <input v-model="newComment" type="text" class="form-control" 
-                     placeholder="Viết bình luận..." @keyup.enter="addComment">
+              <input v-model="newComment" type="text" class="form-control" placeholder="Viết bình luận..."
+                @keyup.enter="addComment">
               <button @click="addComment" class="btn btn-primary">Gửi</button>
             </div>
           </div>
-          <div v-else class="alert alert-warning mt-3">
-            Bạn cần <router-link to="/login">đăng nhập</router-link> để bình luận.
-          </div>
+
         </div>
       </div>
     </div>
-    
+
     <div v-else class="text-center py-5">
       <div class="spinner-border" role="status"></div>
       <p class="mt-3">Đang tải bài viết...</p>
@@ -111,11 +105,8 @@ onMounted(() => {
 
 const formatDate = (date) => {
   return date.toLocaleDateString('vi-VN', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
+    day: '2-digit', month: '2-digit', year: 'numeric',
+    hour: '2-digit', minute: '2-digit'
   })
 }
 
@@ -123,11 +114,11 @@ const addComment = () => {
   if (newComment.value.trim()) {
     const comment = {
       id: book.value.comments.length + 1,
-      username: currentUser.value.name,
+      // Đã đăng nhập → dùng tên tài khoản | Chưa đăng nhập → hiện "Khách"
+      username: currentUser.value ? currentUser.value.name : 'Khách',
       content: newComment.value.trim(),
       timestamp: formatDate(new Date())
     }
-    
     emit('add-comment', book.value.id, comment)
     newComment.value = ''
   }

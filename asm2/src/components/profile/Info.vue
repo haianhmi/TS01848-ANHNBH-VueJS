@@ -1,46 +1,35 @@
+<!-- =====================================================
+  profile/Info.vue — Tab "Thông tin" trong trang Profile
+  Là route con: /profile (index child)
+  Nhận prop :user từ Profile.vue qua <router-view :user="user">
+===================================================== -->
 <template>
   <div class="card shadow-sm">
-    <div class="card-header text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="card-header card-header-gradient">
       <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Thông Tin Cơ Bản</h5>
     </div>
     <div class="card-body">
-      <div class="row mb-3">
-        <div class="col-md-4 fw-bold text-secondary">
-          <i class="bi bi-person me-2"></i>Họ và tên:
-        </div>
-        <div class="col-md-8">{{ user.name }}</div>
-      </div>
-      <hr>
-      <div class="row mb-3">
-        <div class="col-md-4 fw-bold text-secondary">
-          <i class="bi bi-envelope me-2"></i>Email:
-        </div>
-        <div class="col-md-8">{{ user.email }}</div>
-      </div>
-      <hr>
-      <div class="row mb-3">
-        <div class="col-md-4 fw-bold text-secondary">
-          <i class="bi bi-shield-check me-2"></i>Vai trò:
-        </div>
-        <div class="col-md-8">
-          <span class="badge text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-            Thành viên
-          </span>
-        </div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-md-4 fw-bold text-secondary">
-          <i class="bi bi-calendar-event me-2"></i>Ngày tham gia:
-        </div>
-        <div class="col-md-8">01/01/2024</div>
-      </div>
+      <!-- Dùng table-like layout với Bootstrap grid -->
+      <dl class="row mb-0">
+        <dt class="col-sm-4 text-secondary"><i class="bi bi-person me-1"></i>Họ và tên</dt>
+        <dd class="col-sm-8">{{ user?.name }}</dd>
+
+        <dt class="col-sm-4 text-secondary"><i class="bi bi-envelope me-1"></i>Email</dt>
+        <dd class="col-sm-8">{{ user?.email }}</dd>
+
+        <dt class="col-sm-4 text-secondary"><i class="bi bi-shield-check me-1"></i>Vai trò</dt>
+        <dd class="col-sm-8">
+          <span class="badge badge-gradient">Thành viên</span>
+        </dd>
+
+        <dt class="col-sm-4 text-secondary"><i class="bi bi-calendar-event me-1"></i>Ngày tham gia</dt>
+        <dd class="col-sm-8 mb-0">01/01/2024</dd>
+      </dl>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useAuth } from '../../router'
-
-const { currentUser: user } = useAuth()
+// Nhận user từ Profile.vue (component cha) qua router-view prop
+defineProps({ user: Object })
 </script>

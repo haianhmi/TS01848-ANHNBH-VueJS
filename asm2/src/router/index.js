@@ -1,9 +1,21 @@
+// =====================================================
+// router/index.js
+// Chứa: cấu hình routes, navigation guards, useAuth()
+// =====================================================
+
 import { createRouter, createWebHistory } from 'vue-router'
 import { ref } from 'vue'
 
+// ----- Auth State (module-level singleton) -----
+// Dùng ref ở module scope để dữ liệu chia sẻ toàn app
 const isAuthenticated = ref(false)
 const currentUser = ref(null)
 
+// ----- Dark Mode State -----
+// Lưu trạng thái theme, mặc định là 'light'
+const theme = ref(localStorage.getItem('theme') || 'light')
+
+// Import các component trang
 import Home from '../components/Home.vue'
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
@@ -14,18 +26,19 @@ import NotFound from '../components/NotFound.vue'
 import ProfileInfo from '../components/profile/Info.vue'
 import ProfileSettings from '../components/profile/Settings.vue'
 
+// ----- Định nghĩa routes -----
 const routes = [
   {
     path: '/',
     name: 'home',
     component: Home,
-    meta: { title: 'Trang chủ - Blog' }
+    meta: { title: 'Trang chủ - MyBlog' }
   },
   {
     path: '/login',
     name: 'login',
     component: Login,
-    meta: { title: 'Đăng nhập', requiresGuest: true }
+    meta: { title: 'Đăng nhập', requiresGuest: true } // chỉ vào được khi chưa đăng nhập
   },
   {
     path: '/register',
@@ -37,32 +50,21 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: Profile,
-    meta: { title: 'Thông tin cá nhân', requiresAuth: true },
+    meta: { title: 'Trang cá nhân', requiresAuth: true }, // cần đăng nhập
     children: [
-      {
-        path: '',
-        name: 'profile-info',
-        component: ProfileInfo,
-        meta: { title: 'Thông tin cá nhân' }
-      },
-      {
-        path: 'settings',
-        name: 'profile-settings',
-        component: ProfileSettings,
-        meta: { title: 'Cài đặt tài khoản' }
-      }
+      { path: '', name: 'profile-info', component: ProfileInfo },
+      { path: 'settings', name: 'profile-settings', component: ProfileSettings }
     ]
   },
   {
     path: '/me',
-    redirect: '/profile',
-    alias: '/profile'
+    redirect: '/profile' // alias nhanh
   },
   {
     path: '/dashboard',
     name: 'dashboard',
     component: Dashboard,
-    meta: { title: 'Bảng điều khiển', requiresAuth: true }
+    meta: { title: 'Dashboard', requiresAuth: true }
   },
   {
     path: '/blog/:id',
@@ -74,7 +76,7 @@ const routes = [
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: NotFound,
-    meta: { title: 'Không tìm thấy trang' }
+    meta: { title: '404 - Không tìm thấy' }
   }
 ]
 
@@ -83,53 +85,61 @@ const router = createRouter({
   routes
 })
 
+// ----- Navigation Guard -----
+// Chạy trước mỗi lần chuyển trang
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title || 'Blog'
-  
+  // Cập nhật tiêu đề tab trình duyệt
+  document.title = to.meta.title || 'MyBlog'
+
+  // Trang yêu cầu đăng nhập mà chưa đăng nhập → về login
   if (to.meta.requiresAuth && !isAuthenticated.value) {
-    next({ name: 'login', query: { redirect: to.fullPath } })
-    return
+    return next({ name: 'login', query: { redirect: to.fullPath } })
   }
-  
+
+  // Trang chỉ dành cho khách (login/register) mà đã đăng nhập → về home
   if (to.meta.requiresGuest && isAuthenticated.value) {
-    next({ name: 'home' })
-    return
+    return next({ name: 'home' })
   }
-  
+
   next()
 })
 
+// =====================================================
+// useAuth() — Composable dùng chung toàn app
+// =====================================================
 export const useAuth = () => {
+  /** Đăng nhập: lưu user vào state */
   const login = (userData) => {
     isAuthenticated.value = true
     currentUser.value = userData
-    localStorage.setItem('isAuthenticated', 'true')
-    localStorage.setItem('currentUser', JSON.stringify(userData))
   }
-  
+
+  /** Đăng xuất: xóa state */
   const logout = () => {
     isAuthenticated.value = false
     currentUser.value = null
-    localStorage.removeItem('isAuthenticated')
-    localStorage.removeItem('currentUser')
   }
-  
-  const init = () => {
-    const auth = localStorage.getItem('isAuthenticated')
-    const user = localStorage.getItem('currentUser')
-    if (auth === 'true' && user) {
-      isAuthenticated.value = true
-      currentUser.value = JSON.parse(user)
-    }
+
+  return { isAuthenticated, currentUser, login, logout }
+}
+
+// =====================================================
+// useTheme() — Composable quản lý Dark/Light mode
+// =====================================================
+export const useTheme = () => {
+  /** Áp dụng theme lên <html> và lưu vào localStorage */
+  const applyTheme = (value) => {
+    theme.value = value
+    document.documentElement.setAttribute('data-theme', value)
+    localStorage.setItem('theme', value)
   }
-  
-  return {
-    isAuthenticated,
-    currentUser,
-    login,
-    logout,
-    init
+
+  /** Toggle giữa light ↔ dark */
+  const toggleTheme = () => {
+    applyTheme(theme.value === 'light' ? 'dark' : 'light')
   }
+
+  return { theme, toggleTheme, applyTheme }
 }
 
 export default router

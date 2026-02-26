@@ -1,6 +1,165 @@
+/* =========================================
+   style.css — Global Styles
+   Ưu tiên Bootstrap, chỉ override khi cần
+   ========================================= */
+
+/* ---------- Reset & Base ---------- */
 body {
-  margin: 0;
-  background-color: #f8f9fa;
-  min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  margin: 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ---------- CSS Variables: Light / Dark Mode ---------- */
+:root {
+  --bg-color: #f8f9fa;
+  --text-color: #212529;
+  --card-bg: #ffffff;
+  --card-border: #dee2e6;
+  --input-bg: #ffffff;
+  --input-text: #212529;
+  --muted: #6c757d;
+  --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-hover: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+[data-theme="dark"] {
+  --bg-color: #1a1a2e;
+  --text-color: #e0e0e0;
+  --card-bg: #16213e;
+  --card-border: #0f3460;
+  --input-bg: #0f3460;
+  --input-text: #e0e0e0;
+  --muted: #a0a0b0;
+}
+
+/* ---------- Card override cho dark mode ---------- */
+[data-theme="dark"] .card {
+  background-color: var(--card-bg);
+  border-color: var(--card-border);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .input-group .form-control {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-color: var(--card-border);
+}
+
+[data-theme="dark"] .form-control::placeholder {
+  color: var(--muted);
+}
+
+[data-theme="dark"] .bg-light {
+  background-color: var(--input-bg) !important;
+}
+
+[data-theme="dark"] .text-muted,
+[data-theme="dark"] .text-secondary {
+  color: var(--muted) !important;
+}
+
+[data-theme="dark"] .list-group-item {
+  background-color: var(--card-bg);
+  border-color: var(--card-border);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .dropdown-menu {
+  background-color: var(--card-bg);
+  border-color: var(--card-border);
+}
+
+[data-theme="dark"] .dropdown-item {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .dropdown-item:hover {
+  background-color: var(--card-border);
+}
+
+[data-theme="dark"] hr {
+  border-color: var(--card-border);
+}
+
+/* ---------- Gradient Button (dùng chung) ---------- */
+.btn-gradient {
+  background: var(--gradient);
+  color: #fff;
+  border: none;
+}
+
+.btn-gradient:hover,
+.btn-gradient:focus {
+  background: var(--gradient-hover);
+  color: #fff;
+}
+
+/* ---------- Gradient Text (cho 404) ---------- */
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---------- Gradient Badge ---------- */
+.badge-gradient {
+  background: var(--gradient);
+  color: #fff;
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+  background: var(--gradient) !important;
+}
+
+/* ---------- Nav Tabs Active State ---------- */
+.nav-tabs .nav-link.active {
+  color: #667eea;
+  border-bottom: 3px solid #667eea;
+  font-weight: 600;
+}
+
+/* ---------- Card Header Gradient (dùng class thay inline) ---------- */
+.card-header-gradient {
+  background: var(--gradient);
+  color: #fff;
+}
+
+/* ---------- Book Image trong Home ---------- */
+.book-cover {
+  width: 100px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* ---------- Avatar ---------- */
+.avatar-lg {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border: 4px solid white;
+}
+
+/* ---------- Dark mode toggle button ---------- */
+.btn-theme-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  border-radius: 50px;
+  padding: 4px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.35);
+  color: #fff;
 }
